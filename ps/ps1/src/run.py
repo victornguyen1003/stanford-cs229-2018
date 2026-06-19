@@ -1,0 +1,23 @@
+import logging
+from datetime import datetime
+
+logging.basicConfig(level=logging.INFO, 
+                    format='%(asctime)s - %(levelname)s: %(message)s', 
+                    handlers=[logging.FileHandler(f"../models/logs/training_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log")])
+
+from p01b_logreg import main as p01b
+
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('p_num', nargs='?', type=int, default=0, help='Problem number to run, 0 for all problems')
+args = parser.parse_args()
+
+if args.p_num == 0 or args.p_num == 1:
+    p01b(train_path='../data/ds1_train.csv',
+         eval_path='../data/ds1_valid.csv',
+         pred_path='output/p01b_pred_1.txt')
+    
+    p01b(train_path='../data/ds2_train.csv',
+         eval_path='../data/ds2_valid.csv',
+         pred_path='output/p01b_pred_2.txt')
